@@ -8,18 +8,17 @@
 // @run-at       document-end
 // @grant        unsafeWindow
 // @domain       https://www.twitch.tv
-// @require      https://code.jquery.com/jquery-3.4.1.min.js
 // @author       Tom
-// @copyright    2019, Tom
+// @copyright    2020, Tom
 // ==/UserScript==
 /* jshint -W097 */
-/* global $, console */
+/* console */
 'use strict';
 
 /*
 TODO:
 - Support SPA:
---- Detach from chat when state changes
+--- Detach from chat when state changes // https://stackoverflow.com/a/52809105/1760313
 --- (Re)attach to chat when state changes
 - Save the chat msgs somewhere outside of the console
 - (icm with above) button that lights up after receiving new mentions
@@ -27,6 +26,8 @@ TODO:
 Later:
 - Pick from a list of notification sounds
 - Upload your own sound
+- Custom list of mentions that you want to be notified of
+- ^> Custom notification sound
 */
 
 const DEBUG = true;
