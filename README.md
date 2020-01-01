@@ -1,6 +1,6 @@
 # Twitch Mention Helper
 This userscript helps keeping track of chat mentions. I'm currently working on it and there's not much to see right now, however you might still want to consider installing it.<BR />
-At the moment a notification sound is heard whenever you get @mentioned and opening the console shows you at what time that was + the message itself.<BR />More is in the works!
+At the moment a notification sound is heard whenever you (or anyone you specify in `_usernamesToTrack`)get @mentioned and opening the console shows you at what time that was + the message itself.<BR />More is in the works!
 <BR/><BR/>
 Version <strong>0.1</strong>
 
