@@ -22,6 +22,7 @@ TODO:
 - (icm with above) button that lights up after receiving new mentions
 - (icm with above) view mentions somewhere inline
 Later:
+- Log emotes
 - Support a set of notification sounds
 - Custom notification sound (per username)
 */
@@ -45,7 +46,7 @@ function initialise() {
 	setupStateChangeEvent();
 	initialiseUsernamesToTrack();
 	initialiseStateChangeEvent();
-	tryAttachToChat();
+	setTimeout(() => tryAttachToChat());
 }
 
 // Thanks to https://stackoverflow.com/a/52809105/1760313
