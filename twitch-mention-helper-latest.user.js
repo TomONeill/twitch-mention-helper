@@ -17,12 +17,11 @@
 
 /*
 TODO:
-- Ignore casing
 - Save the chat msgs somewhere outside of the console
 - (icm with above) button that lights up after receiving new mentions
 - (icm with above) view mentions somewhere inline
 Later:
-- Log emotes
+- Save chat emotes (img alt)
 - Support a set of notification sounds
 - Custom notification sound (per username)
 */
@@ -51,7 +50,7 @@ function initialise() {
 
 // Thanks to https://stackoverflow.com/a/52809105/1760313
 function setupStateChangeEvent() {
-	history.pushState = (f => function pushState(){
+	history.pushState = (f => function pushState() {
 		const ret = f.apply(this, arguments);
 		window.dispatchEvent(new Event("pushstate"));
 		window.dispatchEvent(new Event("statechange"));
@@ -82,7 +81,7 @@ function getOwnUsername() {
 		return null;
 	}
 
-	 // Click twice on the user menu toggle to render the dropdown in the DOM (but not in view) which contains the username.
+	// Click twice on the user menu toggle to render the dropdown in the DOM (but not in view) which contains the username.
 	const userMenu = document.querySelector(`button[data-a-target="user-menu-toggle"]`);
 	userMenu.click();
 	userMenu.click();
@@ -106,7 +105,7 @@ function isLoggedIn() {
 function initialiseStateChangeEvent() {
 	window.addEventListener("statechange", () => {
 		if (_DEBUG) { console.info("State change detected."); }
-		
+
 		if (isAttachedToChat()) {
 			detachFromChat();
 		}
@@ -173,9 +172,9 @@ function processChatMessage(chatMutation) {
 
 	const chatMessageElement = [...chatMutation.children];
 	const chatMessage = new ChatMessage(chatMessageElement);
-	
+
 	_usernamesToTrack.forEach(usernameToTrack => {
-		if (chatMessage.mentions.includes(usernameToTrack) || chatMessage.mentions.includes(`@${usernameToTrack}`)) {
+		if (chatMessage.mentions.some(mention => mention.toUpperCase() === usernameToTrack.toUpperCase())) {
 			console.log(`(${chatMessage.createdOn}) ${chatMessage.author}:${chatMessage.content}`);
 			playNotificationSound();
 		}
@@ -209,7 +208,9 @@ class ChatMessage {
 		if (this._mentions != null) {
 			return this._mentions;
 		}
-		this._mentions = this.chatMessageElement.filter(x => [...x.classList.values()].includes("mention-fragment")).map(y => y.innerText);
+		this._mentions = this.chatMessageElement
+			.filter(x => [...x.classList.values()].includes("mention-fragment"))
+			.map(y => y.innerText.replace(/^@/, ''));
 		return this._mentions;
 	}
 
@@ -217,8 +218,7 @@ class ChatMessage {
 		if (this._content != null) {
 			return this._content;
 		}
-		const chatMessageContentElement = this.chatMessageElement.find(x => x.className === "text-fragment");
-		this._content = chatMessageContentElement != null ? chatMessageContentElement.innerText : "";
+		this._content =  this.chatMessageElement.innerText;
 		return this._content;
 	}
 }
