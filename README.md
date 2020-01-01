@@ -4,7 +4,7 @@ At the moment a notification sound is heard whenever you get @mentioned and open
 <BR/><BR/>
 Version <strong>0.1</strong>
 
-<A HREF="https://github.com/TomONeill/twitch-mention-helper/raw/master/latest.user.js">INSTALL</A>
+<A HREF="https://github.com/TomONeill/twitch-mention-helper/raw/master/twitch-mention-helper-latest.user.js">INSTALL</A>
 
 # Changelog
 <A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/changelog.txt">View changelog</A>
