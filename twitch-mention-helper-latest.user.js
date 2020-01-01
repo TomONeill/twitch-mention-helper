@@ -32,6 +32,17 @@ Later:
 
 const DEBUG = true;
 
+const executeOnInitialised = setInterval(() => {
+	const hasInitialised = document.querySelector("#root").getAttribute("data-a-page-loaded") != null;
+	if (hasInitialised) {
+		if (DEBUG) { console.log("Page initialised. Executing script..."); }
+		clearInterval(executeOnInitialised);
+		execute();
+	} else {
+		if (DEBUG) { console.log("Page not ready yet."); }
+	}
+}, 250);
+
 function execute() {
 	if (!isLoggedIn()) {
 		if (DEBUG) { console.warn("User not logged in. Please login and refresh the page."); }
@@ -69,7 +80,7 @@ function execute() {
 		userMenu.click();
 
 		const loggedInUsername = document.querySelector("h6[data-a-target=\"user-display-name\"]").innerText;
-		if (DEBUG) { console.log(`Logged in as user ${loggedInUsername}`); }
+		if (DEBUG) { console.log(`The currently logged user is ${loggedInUsername}`); }
 		return loggedInUsername;
 	}
 
@@ -114,16 +125,5 @@ function execute() {
 		audio.play();
 	}
 }
-
-const executeOnInitialized = setInterval(() => {
-	const hasInitialized = document.querySelector("#root").getAttribute("data-a-page-loaded") != null
-	if (hasInitialized) {
-		if (DEBUG) { console.log("Page initialized. Executing script..."); }
-		clearInterval(executeOnInitialized);
-		execute();
-	} else {
-		if (DEBUG) { console.log("Page not ready yet."); }
-	}
-}, 250);
 
 if (DEBUG) { console.log("Script loaded."); }
