@@ -1,0 +1,4 @@
+Twitch Mention Helper Changelog
+
+Version 0.1 (1 January 2020)
+Working draft.
