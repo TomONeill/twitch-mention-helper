@@ -15,12 +15,10 @@ If you like my work so much you feel like doing something nice for me, a complet
 <A HREF="https://www.paypal.me/TomONeill">Donate here</A>.
 
 # Development
-If you want to help with the development, you can. To setup the dev in combination with Tampermonkey/other, do the following:
-1. Open the repository in your favourite IDE.
-2. Open CMD, PowerShell or the terminal (VS Code tip: use CTRL + \`).<br/>
-2.5: If not already, `cd` to this repository.
-3. Type: `tsc --watch` to run the TypeScript compiler. The `tsconfig.json` file will determine the location of the output.
-4. Add a userscript with the following:
+If you want to help with the development, feel free to shoot me a Pull Request!<BR />
+You might want to work with your favourite IDE instead, so here's how to do just that:
+1. Make sure you have ticked the box `Allow access to file URLs` for the Tampermonkey/other extension.
+2. Add a new userscript with the following content:
 ```
 	// ==UserScript==
 	// @name         Twitch Mention Helper
@@ -40,6 +38,4 @@ If you want to help with the development, you can. To setup the dev in combinati
 	/* console */
 	'use strict';
 ```
-5. Make sure you have ticked the box `Allow access to file URLs` for the Tampermonkey/other extension.
-
-Any change will compile (some would say transpile) and a browser refresh will do the rest.
+3. Start editing the userscript in your favourite IDE!
