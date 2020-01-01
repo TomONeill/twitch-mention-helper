@@ -218,7 +218,7 @@ class ChatMessage {
 		if (this._content != null) {
 			return this._content;
 		}
-		this._content =  this.chatMessageElement.innerText;
+		this._content = this.chatMessageElement.map(x => x.innerText).join("");
 		return this._content;
 	}
 }
