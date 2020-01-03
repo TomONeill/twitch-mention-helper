@@ -17,13 +17,14 @@
 
 /*
 TODO:
-- Save the chat msgs somewhere outside of the console
-- (icm with above) button that lights up after receiving new mentions
-- (icm with above) view mentions somewhere inline
+- Button that lights up after receiving new mentions
+- View mentions somewhere inline
 Later:
+- Include source (channel name) of mention
 - Save chat emotes (img alt)
 - Support a set of notification sounds
 - Custom notification sound (per username)
+- Keep mention history option? (localStorage)
 */
 
 const _DEBUG = true;
@@ -175,7 +176,8 @@ function processChatMessage(chatMutation) {
 
 	_usernamesToTrack.forEach(usernameToTrack => {
 		if (chatMessage.mentions.some(mention => mention.toUpperCase() === usernameToTrack.toUpperCase())) {
-			console.log(`(${chatMessage.createdOn}) ${chatMessage.author}:${chatMessage.content}`);
+			console.log(`(${new Date(chatMessage.createdOn).toLocaleString()}) ${chatMessage.author}:${chatMessage.content}`);
+			saveChatMessage(chatMessage);
 			playNotificationSound();
 		}
 	});
@@ -188,7 +190,7 @@ class ChatMessage {
 	_content;
 
 	constructor(chatMessageElement) {
-		this._createdOn = new Date().toLocaleString();
+		this._createdOn = new Date();
 		this.chatMessageElement = chatMessageElement;
 	}
 
@@ -221,6 +223,24 @@ class ChatMessage {
 		this._content = this.chatMessageElement.map(x => x.innerText).join("");
 		return this._content;
 	}
+
+	toJSON() {
+		return {
+			createdOn: this.createdOn,
+			author: this.author,
+			mentions: this.mentions,
+			content: this.content
+		}
+	}
+}
+
+function saveChatMessage(chatMessage) {
+	let existingMessages = JSON.parse(sessionStorage.getItem("twitch-mention-helper.mentions"));
+	if (existingMessages == null) {
+		existingMessages = [];
+	}
+	existingMessages.push(chatMessage);
+	sessionStorage.setItem("twitch-mention-helper.mentions", JSON.stringify(existingMessages));
 }
 
 function playNotificationSound() {
