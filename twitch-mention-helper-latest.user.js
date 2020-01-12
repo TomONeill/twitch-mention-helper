@@ -266,7 +266,7 @@ function addMentionIcon() {
 	const chatInputButtonsContainer = document.getElementsByClassName("chat-input__buttons-container")[0];
 	const chatInputButtons = chatInputButtonsContainer.children[1];
 	const chatSettingsButton = chatInputButtons.children[1];
-	chatSettingsButton.parentNode.insertBefore(mentionIconNode, chatSettingsButton);
+	chatInputButtons.insertBefore(mentionIconNode, chatSettingsButton);
 }
 
 function createNode(html) {
