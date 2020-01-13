@@ -25,7 +25,6 @@ TODO:
   Turn headsup notification on/off
 Later:
 - Include source (channel name) of mention
-- Save chat emotes (img alt)
 - Support a set of notification sounds
 - Custom notification sound (per username)
 - Keep mention history option? (localStorage)
@@ -177,12 +176,11 @@ function processChatMessage(chatMutation) {
 		return;
 	}
 
-	const chatMessageElement = [...chatMutation.children];
-	const chatMessage = new ChatMessage(chatMessageElement);
+	const chatMessage = new ChatMessage(chatMutation);
 
 	_usernamesToTrack.forEach(usernameToTrack => {
 		if (chatMessage.mentions.some(mention => mention.toUpperCase() === usernameToTrack.toUpperCase())) {
-			console.log(`(${new Date(chatMessage.createdOn).toLocaleString()}) ${chatMessage.author}:${chatMessage.content}`);
+			console.log(`(${new Date(chatMessage.createdOn).toLocaleString()}) ${chatMessage.author}:${chatMessage.textContent}`);
 			saveChatMessage(chatMessage);
 			playNotificationSound();
 		}
@@ -193,11 +191,12 @@ class ChatMessage {
 	_createdOn;
 	_author;
 	_mentions;
-	_content;
+	_textContent;
+	_htmlContent;
 
-	constructor(chatMessageElement) {
+	constructor(node) {
 		this._createdOn = new Date();
-		this.chatMessageElement = chatMessageElement;
+		this.node = node;
 	}
 
 	get createdOn() {
@@ -208,7 +207,7 @@ class ChatMessage {
 		if (this._author != null) {
 			return this._author;
 		}
-		this._author = this.chatMessageElement.find(x => x.className === "chat-line__username").innerText;
+		this._author = [...this.node.children].find(x => x.className === "chat-line__username").innerText;
 		return this._author;
 	}
 
@@ -216,18 +215,27 @@ class ChatMessage {
 		if (this._mentions != null) {
 			return this._mentions;
 		}
-		this._mentions = this.chatMessageElement
+		this._mentions = [...this.node.children]
 			.filter(x => [...x.classList.values()].includes("mention-fragment"))
 			.map(y => y.innerText.replace(/^@/, ''));
 		return this._mentions;
 	}
 
-	get content() {
-		if (this._content != null) {
-			return this._content;
+	get textContent() {
+		if (this._textContent != null) {
+			return this._textContent;
 		}
-		this._content = this.chatMessageElement.map(x => x.innerText).join("");
-		return this._content;
+		const messagePart = [...this.node.children].slice(3, this.node.childElementCount);
+		this._textContent = messagePart.map(x => this.getElementText(x)).join("");
+		return this._textContent;
+	}
+
+	get htmlContent() {
+		if (this._htmlContent != null) {
+			return this._htmlContent;
+		}
+		this._htmlContent = this.node.outerHTML;
+		return this._htmlContent;
 	}
 
 	toJSON() {
@@ -235,8 +243,36 @@ class ChatMessage {
 			createdOn: this.createdOn,
 			author: this.author,
 			mentions: this.mentions,
-			content: this.content
+			textContent: this.textContent,
+			htmlContent: this.htmlContent
 		}
+	}
+	
+	// Thanks to https://www.456bereastreet.com/archive/201105/get_element_text_including_alt_text_for_images_with_javascript/
+	getElementText(element) {
+		if (element.nodeType === Node.TEXT_NODE || element.nodeType === Node.CDATA_SECTION_NODE) {
+			return element.nodeValue;
+		}
+
+		if (element.nodeType === Node.ELEMENT_NODE) {
+			if (["img", "area"].includes(element.tagName.toLowerCase()) || this.isInputWithTypeImage(element)) {
+				return element.getAttribute("alt") || "";
+			} else if (!element.tagName.match(/^(script|style)$/i)) {
+				let children = element.childNodes;
+				let text = '';
+				for (let i = 0, arrayLength = children.length; i < arrayLength; i++) {
+					text += this.getElementText(children[i]);
+				}
+				return text;
+			}
+		}
+		return "";
+	}
+
+	isInputWithTypeImage(element) {
+		return element.tagName.toLowerCase() === "input"
+			&& element.getAttribute("type")
+			&& (element.getAttribute("type").toLowerCase() === "image");
 	}
 }
 
@@ -275,8 +311,8 @@ function addMentionIcon() {
 }
 
 function createNode(html) {
-	var wrapper= document.createElement("div");
-	wrapper.innerHTML= html;
+	var wrapper = document.createElement("div");
+	wrapper.innerHTML = html;
 	return wrapper.firstChild;
 }
 
