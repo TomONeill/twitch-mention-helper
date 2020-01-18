@@ -17,12 +17,10 @@
 
 /*
 TODO:
-- Button that lights up after receiving new mentions - only when mention is out of view
-- Clicking on the button views mentions inline + settings
-- Settings include:
-  Turning sound notification on/off
-  Adding other keywords to get notified on
-  Turn headsup notification on/off
+- Indicator on the mention icon after receiving new mentions (only when mention is out of view)
+- Align mention icon properly
+- Hide mention settings popup after clicking X or outside of the popup
+- Make mention settings popup functional
 Later:
 - Include source (channel name) of mention
 - Support a set of notification sounds
@@ -32,7 +30,7 @@ Later:
 */
 
 const _DEBUG = true;
-const _usernamesToTrack = [];
+const _usernamesToTrack = ["Tom"];
 let _chatObserver = null;
 
 const executeOnPageInitialisation = setInterval(() => {
@@ -301,8 +299,13 @@ function addMentionIcon() {
 	const mentionIconNode = createNode(ICON_AT);
 	const mentionSettingsNode = createNode(SETTINGS);
 	mentionIconNode.onclick = () => {
-		// TODO: Check if already open, close otherwise. Clickanywherebuthere and close btn
-		mentionIconNode.children[0].children[0].after(mentionSettingsNode);
+		// TODO: Clickanywherebuthere and close btn
+		const mentionIcon = mentionIconNode.children[0].children[0];
+		if (mentionIcon.nextSibling != null) {
+			mentionSettingsNode.remove();
+		} else {
+			mentionIcon.after(mentionSettingsNode);
+		}
 	};
 	const chatInputButtonsContainer = document.getElementsByClassName("chat-input__buttons-container")[0];
 	const chatInputButtons = chatInputButtonsContainer.children[1];
