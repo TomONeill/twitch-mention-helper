@@ -7,7 +7,7 @@ Version <strong>0.1</strong>
 <A HREF="https://github.com/TomONeill/twitch-mention-helper/raw/master/twitch-mention-helper-latest.user.js">INSTALL</A>
 
 # Screenshot
-<A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png"><IMG SRC="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png" width="100" height="600" /></A>
+<A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png"><IMG SRC="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png" width="200" height="600" /></A>
 
 # Changelog
 <A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/changelog.txt">View changelog</A>
