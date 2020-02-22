@@ -18,7 +18,6 @@
 /*
 TODO:
 - Indicator on the mention icon after receiving new mentions (only when mention is out of view)
-- Hide mention settings popup after clicking X or outside of the popup
 - Make mention settings popup functional
 - Fix state change properly, including re-adding html
 Later:
