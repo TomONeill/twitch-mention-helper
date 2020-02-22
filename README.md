@@ -1,6 +1,7 @@
 # Twitch Mention Helper
-This userscript helps keeping track of chat mentions. I'm currently working on it and there's not much to see right now, however you might still want to consider installing it.<BR />
-At the moment a notification sound is heard whenever you (or anyone specified in `_usernamesToTrack`) get @mentioned and opening the console shows you at what time that was + the message itself.<BR />More is in the works!
+This userscript helps keeping track of chat mentions. <BR />
+Note that this script is still a work in progress! Currently it supports audio notifications and being able to see notifications in a separate popup.<BR />
+Whenever you get @mentioned (or anyone specified in `_usernamesToTrack`), the message will be written to the browser's console window.<BR />More is in the works!
 <BR/><BR/>
 Version <strong>0.1</strong>
 
@@ -8,6 +9,11 @@ Version <strong>0.1</strong>
 
 # Screenshot
 <A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png"><IMG SRC="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/screenshot.png" width="300" height="600" /></A>
+
+# Known issues
+- Settings don't work. Audio notifications are always heard.
+- If you get mentioned too many times the popup will go out of view at a certain point.
+- Mentions are being kept across different streams within the same session.
 
 # Changelog
 <A HREF="https://raw.githubusercontent.com/TomONeill/twitch-mention-helper/master/changelog.txt">View changelog</A>
