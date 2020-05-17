@@ -47,8 +47,10 @@ function initialise() {
 	setupStateChangeEvent();
 	initialiseUsernamesToTrack();
 	initialiseStateChangeEvent();
-	addHtml();
-	setTimeout(() => tryAttachToChat());
+	setTimeout(() => {
+		addHtml();
+		tryAttachToChat();
+	});
 }
 
 // Thanks to https://stackoverflow.com/a/52809105/1760313
@@ -142,7 +144,7 @@ function tryAttachToChat() {
 }
 
 function findChatList() {
-	const chatListContainers = document.getElementsByClassName("chat-list__list-container");
+	const chatListContainers = document.getElementsByClassName("chat-scrollable-area__message-container");
 	if (chatListContainers.length > 0) {
 		return chatListContainers[0];
 	}
