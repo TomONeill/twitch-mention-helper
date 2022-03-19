@@ -1,3 +1,8 @@
+# Archiving this repository
+I am archiving this repo since I am not working on this script anymore.
+
+I used the script mainly for myself to keep track of the mentions + audio notifications and wasn't very motivated into making it better. Then with several Twitch updates the script broke a couple of times. Now that I'm not on Twitch anymore I am saying goodbye to the development of this user script for now!
+
 # Twitch Mention Helper
 This userscript helps keeping track of chat mentions. <BR />
 Note that this script is still a work in progress! Currently it supports audio notifications and being able to see notifications in a separate popup.<BR />
